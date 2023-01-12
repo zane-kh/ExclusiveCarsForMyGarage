@@ -30,7 +30,7 @@ DEBUG = True
 #production
 # DEBUG=False
 
-ALLOWED_HOSTS = ['exclusivecarsformygarage.herokuapp.com']
+ALLOWED_HOSTS = ['jndbsrwlai.us17.qoddiapp.com']
 # ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = 'dashboard'
