@@ -12,25 +12,41 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+from dotenv import load_dotenv
+import os
+
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
+
+# core/settings.py
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=!^5=rj&seg*-@oswmi2mdkuq5xuklgyq@82y%!n(8ca26j$+p'
+# SECRET_KEY = 'django-insecure-=!^5=rj&seg*-@oswmi2mdkuq5xuklgyq@82y%!n(8ca26j$+p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 #production
 # DEBUG=False
 
-ALLOWED_HOSTS = ['jndbsrwlai.us17.qoddiapp.com']
+# ALLOWED_HOSTS = ['jndbsrwlai.us17.qoddiapp.com']
 # ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = 'dashboard'
@@ -113,8 +129,10 @@ WSGI_APPLICATION = 'ecfmg.wsgi.application'
 # }
 
 #deploy database
-DATABASES={'default':dj_database_url.config(default='postgres://dev:password@localhost/ecfmg_db')}
-
+# DATABASES={'default':dj_database_url.config(default='postgres://dev:password@localhost/ecfmg_db')}
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
