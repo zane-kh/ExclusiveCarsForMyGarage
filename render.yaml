@@ -1,0 +1,20 @@
+databases:
+  - name: ExclusiveCarsForMyGarage
+    databaseName: ExclusiveCarsForMyGarage
+    user: Zane
+
+services:
+  - type: web
+    name: ExclusiveCarsForMyGarage
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mysite.wsgi:application"
+    envVars:
+      - key: postgres://dev:password@localhost/ecfmg_db
+        fromDatabase:
+          name: ExclusiveCarsForMyGarage
+          property: connectionString
+      - key: "django-insecure-=!^5=rj&seg*-@oswmi2mdkuq5xuklgyq@82y%!n(8ca26j$+p"
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
